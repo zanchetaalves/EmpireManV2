@@ -12,6 +12,6 @@ namespace EmpireMan.Business.Models
         public DateTime DataCadastro { get; set; }
         public bool Ativo { get; set; }
 
-        public Categoria Categoria { get; set; }
+        public virtual Categoria Categoria { get; set; }
     }
 }

@@ -6,6 +6,6 @@ namespace EmpireMan.Business.Models
     {
         public string Descricao { get; set; }
 
-        public IEnumerable<Produto> Produtos { get; set; }
+        public virtual IEnumerable<Produto> Produtos { get; set; }
     }
 }

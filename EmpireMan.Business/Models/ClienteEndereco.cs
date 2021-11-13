@@ -13,6 +13,6 @@ namespace EmpireMan.Business.Models
         public string Cidade { get; set; }
         public string Estado { get; set; }
 
-        public Cliente Cliente { get; set; }
+        public virtual Cliente Cliente { get; set; }
     }
 }

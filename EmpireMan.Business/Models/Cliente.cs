@@ -11,6 +11,6 @@ namespace EmpireMan.Business.Models
         public DateTime DataNascimento { get; set; }
         public bool Ativo { get; set; }
 
-        public ClienteEndereco ClienteEndereco { get; set; }
+        public virtual ClienteEndereco ClienteEndereco { get; set; }
     }
 }
