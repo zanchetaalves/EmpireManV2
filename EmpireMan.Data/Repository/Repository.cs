@@ -50,7 +50,7 @@ namespace EmpireMan.Data.Repository
 
         public virtual async Task Remover(int id)
         {
-            var entity = new TEntity { Id = id };
+            var entity = DbSet.Find(id);
             DbSet.Remove(entity);
             await SaveChanges();
         }

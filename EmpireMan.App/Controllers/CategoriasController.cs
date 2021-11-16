@@ -84,7 +84,7 @@ namespace EmpireMan.App.Controllers
             return View(categoriaVm);
         }
 
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

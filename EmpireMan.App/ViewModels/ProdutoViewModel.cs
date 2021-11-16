@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -38,5 +39,6 @@ namespace EmpireMan.App.ViewModels
 
 
         public CategoriaViewModel Categoria { get; set; }
+        public List<CategoriaViewModel> ListaCategorias { get; set; }
     }
 }
