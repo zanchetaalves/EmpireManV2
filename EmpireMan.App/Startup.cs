@@ -52,6 +52,7 @@ namespace EmpireMan.App
             services.AddScoped<IClienteEnderecoRepository, ClienteEnderecoRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
+            services.AddScoped<IProdutoEstoqueRepository, ProdutoEstoqueRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
