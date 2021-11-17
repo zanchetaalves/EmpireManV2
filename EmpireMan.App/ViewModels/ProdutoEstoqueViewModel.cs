@@ -11,7 +11,7 @@ namespace EmpireMan.App.ViewModels
 
         [DisplayName("Produto")]
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
-        public string ProdutoId { get; set; }
+        public int ProdutoId { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public int Quantidade { get; set; }
