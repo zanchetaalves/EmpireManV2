@@ -1,0 +1,76 @@
+﻿@using EmpireMan.App.Extensions
+@model EmpireMan.App.ViewModels.ClienteViewModel
+
+<div style="padding-top: 20px">
+    <div>
+        <hr />
+        <h4>Endereço</h4>
+    </div>
+
+    @if (Model != null)
+    {
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ClienteEndereco.Logradouro)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ClienteEndereco.Numero)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ClienteEndereco.Complemento)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ClienteEndereco.Bairro)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ClienteEndereco.Cep)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ClienteEndereco.Cidade)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ClienteEndereco.Estado)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.ClienteEndereco.Logradouro)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ClienteEndereco.Numero)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ClienteEndereco.Complemento)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ClienteEndereco.Bairro)
+                </td>
+                <td>
+                    @this.FormataCep(Model.ClienteEndereco.Cep)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ClienteEndereco.Cidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ClienteEndereco.Estado)
+                </td>
+                <td>
+                    <a supress-by-action="Edit,ObterEndereco" asp-action="AtualizarEndereco" asp-route-id="@Model.Id" class="btn btn-info" data-modal="">
+                        <span title="Editar" class="fa fa-pencil-alt"></span>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    }
+
+</div>
+
+<script>
+    AjaxModal();
+</script>
+
