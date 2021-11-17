@@ -12,14 +12,17 @@ namespace EmpireMan.App.Controllers
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly ICategoriaRepository _categoriaRepository;
+        private readonly IProdutoEstoqueRepository _produtoEstoqueRepository;
         private readonly IMapper _mapper;
 
         public ProdutosController(IProdutoRepository produtoRepository,
                                   ICategoriaRepository categoriaRepository,
+                                  IProdutoEstoqueRepository produtoEstoqueRepository,
                                   IMapper mapper)
         {
             _produtoRepository = produtoRepository;
             _categoriaRepository = categoriaRepository;
+            _produtoEstoqueRepository = produtoEstoqueRepository;
             _mapper = mapper;
         }
 
@@ -95,6 +98,9 @@ namespace EmpireMan.App.Controllers
             var produto = await _produtoRepository.ObterPorId(id);
 
             if (produto == null) return NotFound();
+
+            if (produto.ProdutoEstoque != null)
+                await _produtoEstoqueRepository.Remover(produto.ProdutoEstoque.Id);
 
             await _produtoRepository.Remover(id);
 
