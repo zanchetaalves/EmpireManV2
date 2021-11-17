@@ -49,11 +49,7 @@ namespace EmpireMan.App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProdutoEstoqueViewModel vm)
         {
-            if (!ModelState.IsValid) {
-                vm = await ObterProdutos(vm);
-                return View(vm);
-            } 
-
+            vm.Produto = null;
             var entity = _mapper.Map<ProdutoEstoque>(vm);
             await _produtoEstoqueRepository.Adicionar(entity);
 
@@ -74,7 +70,8 @@ namespace EmpireMan.App.Controllers
         public async Task<IActionResult> Edit(int id, ProdutoEstoqueViewModel vm)
         {
             if (id != vm.Id) return NotFound();
-            if (!ModelState.IsValid) return View(vm);
+            
+            vm.Produto = null;
 
             var entity = _mapper.Map<ProdutoEstoque>(vm);
             await _produtoEstoqueRepository.Atualizar(entity);

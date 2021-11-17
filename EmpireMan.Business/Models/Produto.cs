@@ -14,6 +14,6 @@ namespace EmpireMan.Business.Models
         public bool Ativo { get; set; }
 
         public virtual Categoria Categoria { get; set; }
-        public virtual IEnumerable<ProdutoEstoque >ProdutoEstoque { get; set; }
+        public virtual ProdutoEstoque ProdutoEstoque { get; set; }
     }
 }

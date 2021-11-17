@@ -14,8 +14,7 @@ namespace EmpireMan.Data.Mappings
                 .IsRequired();
 
             builder.HasOne(x => x.Produto)
-              .WithMany(x => x.ProdutoEstoque)
-              .HasForeignKey(x => x.ProdutoId);
+              .WithOne(x => x.ProdutoEstoque);
 
             builder.ToTable("ProdutoEstoque");
         }

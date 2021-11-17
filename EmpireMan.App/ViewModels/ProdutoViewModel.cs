@@ -40,5 +40,6 @@ namespace EmpireMan.App.ViewModels
 
         public CategoriaViewModel Categoria { get; set; }
         public List<CategoriaViewModel> ListaCategorias { get; set; }
+        public ProdutoEstoqueViewModel ProdutoEstoque { get; set; }
     }
 }
