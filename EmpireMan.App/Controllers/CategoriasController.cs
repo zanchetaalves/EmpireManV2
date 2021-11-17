@@ -3,6 +3,7 @@ using EmpireMan.App.ViewModels;
 using EmpireMan.Business.Interfaces;
 using EmpireMan.Business.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,12 +12,15 @@ namespace EmpireMan.App.Controllers
     public class CategoriasController : BaseController
     {
         private readonly ICategoriaRepository _categoriaRepository;
+        private readonly IProdutoRepository _produtoRepository;
         private readonly IMapper _mapper;
 
         public CategoriasController(ICategoriaRepository categoriaRepository,
+                                    IProdutoRepository produtoRepository,
                                     IMapper mapper)
         {
             _categoriaRepository = categoriaRepository;
+            _produtoRepository = produtoRepository;
             _mapper = mapper;
         }
 
@@ -91,6 +95,9 @@ namespace EmpireMan.App.Controllers
             var categoria = await _categoriaRepository.ObterPorId(id);
 
             if (categoria == null) return NotFound();
+
+            if (categoria.Produtos != null)
+                throw new Exception("Não foi possível excluir a categoria, existem produtos vínculados a mesma.");
 
             await _categoriaRepository.Remover(id);
 
