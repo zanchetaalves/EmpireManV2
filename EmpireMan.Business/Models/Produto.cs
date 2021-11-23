@@ -15,5 +15,6 @@ namespace EmpireMan.Business.Models
 
         public virtual Categoria Categoria { get; set; }
         public virtual ProdutoEstoque ProdutoEstoque { get; set; }
+        //public virtual IEnumerable<PedidoItensProduto> PedidoItensProdutos { get; set; }
     }
 }

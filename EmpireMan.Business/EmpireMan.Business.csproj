@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\PedidoItens.cs" />
+    <Compile Remove="Models\PedidoItensProduto.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.3.0" />
   </ItemGroup>
 

@@ -33,6 +33,10 @@ namespace EmpireMan.Data.Mappings
             builder.HasOne(x => x.ClienteEndereco)
                 .WithOne(x => x.Cliente);
 
+            builder.HasMany(x => x.Pedidos)
+               .WithOne(x => x.Cliente)
+               .HasForeignKey(x => x.ClienteId);
+
             builder.ToTable("Clientes");
         }
     }
