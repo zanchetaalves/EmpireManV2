@@ -8,43 +8,60 @@
 
 <hr />
 
-<form nctype="multipart/form-data" asp-action="Edit">
-    <input type="hidden" asp-for="Id" />
-    <input type="hidden" asp-for="CategoriaId" />
+<div class="row">
+    <div class="col-md-10">
+        <form enctype="multipart/form-data" asp-action="Edit">
+            <input type="hidden" asp-for="Id" />
 
-    <div class="form-row">
-        <div class="form-group">
-            <label asp-for="CategoriaId" class="control-label"></label>
-            <input asp-for="Categoria.Descricao" class="form-control" readonly="readonly" disabled="disabled" />
-        </div>
-        <div class="form-group">
-            <label asp-for="Descricao" class="control-label"></label>
-            <input asp-for="Descricao" class="form-control" />
-            <span asp-validation-for="Descricao" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="CodigoBarras" class="control-label"></label>
-            <input asp-for="CodigoBarras" class="form-control" />
-            <span asp-validation-for="CodigoBarras" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Valor" class="control-label"></label>
-            <input asp-for="Valor" class="form-control" />
-            <span asp-validation-for="Valor" class="text-danger"></span>
-        </div>
-    </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="CategoriaId" class="control-label"></label>
+                    <input asp-for="Categoria.Descricao" class="form-control" readonly="readonly" disabled="disabled" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Descricao" class="control-label"></label>
+                    <input asp-for="Descricao" class="form-control" />
+                    <span asp-validation-for="Descricao" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CodigoBarras" class="control-label"></label>
+                    <input asp-for="CodigoBarras" class="form-control" />
+                    <span asp-validation-for="CodigoBarras" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Valor" class="control-label"></label>
+                    <input asp-for="Valor" class="form-control" />
+                    <span asp-validation-for="Valor" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>Imagem Atual</label><br />
+                    <img src="~/imagensProdutos/@Model.Imagem" alt="@Model.Imagem" style="width: 100px; height: 100px" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImagemUpload" class="control-label"></label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="ImagemUpload" asp-for="ImagemUpload" />
+                        <label data-browse="Procurar" style="width:400px" class="custom-file-label" for="ImagemUpload"></label>
+                        <label style="display: none" id="img_nome"></label>
+                    </div>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <input type="submit" value="Salvar" class="btn btn-primary" />
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <a class="btn btn-info" href="javascript:window.history.back();">Voltar</a>
+            </div>
+        </form>
     </div>
-</form>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-        $(document).ready(function () {
-            AjaxModal();
+        $("#ImagemUpload").change(function () {
+            $("#img_nome").text(this.files[0].name);
+            $("#img_nome")[0].style.display = 'block';
         });
     </script>
 }

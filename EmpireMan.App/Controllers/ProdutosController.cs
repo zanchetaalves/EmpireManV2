@@ -62,6 +62,7 @@ namespace EmpireMan.App.Controllers
             if (!await UploadArquivo(vm.ImagemUpload, imgPrefixo)) return View(vm);
 
             vm.Imagem = imgPrefixo + vm.ImagemUpload.FileName;
+            vm.DataCadastro = DateTime.Now;
 
             var produto = _mapper.Map<Produto>(vm);
             await _produtoRepository.Adicionar(produto);
@@ -85,7 +86,23 @@ namespace EmpireMan.App.Controllers
             if (id != vm.Id) return NotFound();
             if (!ModelState.IsValid) return View(vm);
 
-            var produto = _mapper.Map<Produto>(vm);
+            var produtoAtual = await _produtoRepository.ObterPorId(id);
+            vm.Imagem = produtoAtual.Imagem;
+
+            if (vm.ImagemUpload != null)
+            {
+                var imgPrefixo = string.Concat(Guid.NewGuid(), "_");
+                if (!await UploadArquivo(vm.ImagemUpload, imgPrefixo)) return View(vm);
+
+                produtoAtual.Imagem = string.Concat(imgPrefixo, vm.ImagemUpload.FileName);
+            }
+
+            produtoAtual.Descricao = vm.Descricao;
+            produtoAtual.CodigoBarras = vm.CodigoBarras;
+            produtoAtual.Valor = vm.Valor;
+            produtoAtual.Ativo = vm.Ativo;
+
+            var produto = _mapper.Map<Produto>(produtoAtual);
             await _produtoRepository.Atualizar(produto);
 
             return RedirectToAction(nameof(Index));
