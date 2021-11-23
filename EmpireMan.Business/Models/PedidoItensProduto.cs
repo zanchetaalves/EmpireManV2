@@ -3,8 +3,8 @@
     public class PedidoItensProduto
     {
         public int PedidoItensId { get; set; }
-        public PedidoItens PedidoItens { get; set; }
+        public virtual PedidoItens PedidoItens { get; set; }
         public int ProdutoId { get; set; }
-        public Produto Produto { get; set; }
+        public virtual Produto Produto { get; set; }
     }
 }
