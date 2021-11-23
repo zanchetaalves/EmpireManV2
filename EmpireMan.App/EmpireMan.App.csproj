@@ -21,4 +21,8 @@
     <ProjectReference Include="..\EmpireMan.Data\EmpireMan.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\imagensProdutos\" />
+  </ItemGroup>
+
 </Project>

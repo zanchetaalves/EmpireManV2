@@ -24,7 +24,7 @@ namespace EmpireMan.App.ViewModels
         [MaxLength(100)]
         public string CodigoBarras { get; set; }
 
-
+        [DisplayName("Imagem do Produto")]
         public IFormFile ImagemUpload { get; set; }
         public string Imagem { get; set; }
 

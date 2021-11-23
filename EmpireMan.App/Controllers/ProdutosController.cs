@@ -2,8 +2,11 @@
 using EmpireMan.App.ViewModels;
 using EmpireMan.Business.Interfaces;
 using EmpireMan.Business.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace EmpireMan.App.Controllers
@@ -53,6 +56,12 @@ namespace EmpireMan.App.Controllers
         public async Task<IActionResult> Create(ProdutoViewModel vm)
         {
             if (!ModelState.IsValid) return View(vm);
+
+            var imgPrefixo = string.Concat(Guid.NewGuid(), "_");
+
+            if (!await UploadArquivo(vm.ImagemUpload, imgPrefixo)) return View(vm);
+
+            vm.Imagem = imgPrefixo + vm.ImagemUpload.FileName;
 
             var produto = _mapper.Map<Produto>(vm);
             await _produtoRepository.Adicionar(produto);
@@ -111,6 +120,24 @@ namespace EmpireMan.App.Controllers
         {
             vm.ListaCategorias = _mapper.Map<List<CategoriaViewModel>>(await _categoriaRepository.ObterTodos());
             return vm;
+        }
+
+        private async Task<bool> UploadArquivo(IFormFile arquivo, string imgPrefixo)
+        {
+            if (arquivo.Length <= 0) return false;
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/imagensProdutos", string.Concat(imgPrefixo, arquivo.FileName));
+
+            if (System.IO.File.Exists(path))
+            {
+                ModelState.AddModelError(string.Empty, "Já existe um arquivo com este nome. Tente novamente.");
+                return false;
+            }
+
+            using (var stream = new FileStream(path, FileMode.Create))
+                await arquivo.CopyToAsync(stream);
+
+            return true;
         }
     }
 }

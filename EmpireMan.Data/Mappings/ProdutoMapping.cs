@@ -18,7 +18,7 @@ namespace EmpireMan.Data.Mappings
                 .HasColumnType("nvarchar(100)");
 
             builder.Property(x => x.Imagem)
-                .HasColumnType("image");
+                .HasColumnType("nvarchar(200)");
 
             builder.Property(x => x.Valor)
                 .IsRequired()

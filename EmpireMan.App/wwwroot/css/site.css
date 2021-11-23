@@ -35,3 +35,10 @@ for details on configuring this project to bundle and minify static web assets. 
         display: none;
     }
 }
+
+input,
+select,
+file,
+textarea {
+    max-width: 400px;
+}
