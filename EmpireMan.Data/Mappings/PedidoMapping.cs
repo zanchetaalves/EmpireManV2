@@ -19,6 +19,9 @@ namespace EmpireMan.Data.Mappings
             builder.Property(x => x.ValorDesconto)
                .HasColumnType("decimal(18,2)");
 
+            builder.Property(x => x.ValorTotal)
+              .HasColumnType("decimal(18,2)");
+
             builder.HasOne(x => x.Cliente)
                .WithMany(x => x.Pedidos)
                .HasForeignKey(x => x.ClienteId);

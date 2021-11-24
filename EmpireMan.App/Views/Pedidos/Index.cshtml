@@ -1,0 +1,51 @@
+﻿@model EmpireMan.App.ViewModels.PedidoFiltroViewModel
+
+@{
+    ViewData["Title"] = "Lista de Pedidos";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p supress-by-claim-name="Pedido" supress-by-claim-value="Adicionar">
+    <a class="btn btn-info" asp-action="Create">Novo Pedido</a>
+</p>
+
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Data do Pedido
+            </th>
+            <th>
+                Cliente
+            </th>
+            <th>
+                Valor Total
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Pedidos)
+        {
+            foreach (var item2 in item.PedidoItens)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item2.Pedido.DataPedido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item2.Pedido.Cliente.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item2.Pedido.ValorTotal)
+                    </td>
+                    <td class="text-right">
+                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></spam></a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -12,6 +12,7 @@ using EmpireMan.App.Configurations;
 using EmpireMan.Business.Interfaces;
 using EmpireMan.Data.Repository;
 using AutoMapper;
+using EmpireMan.App.ModelBuilders;
 
 namespace EmpireMan.App
 {
@@ -53,6 +54,9 @@ namespace EmpireMan.App
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IProdutoEstoqueRepository, ProdutoEstoqueRepository>();
+            services.AddScoped<IPedidoRepository, PedidoRepository>();
+            services.AddScoped<IPedidoItensRepository, PedidoItensRepository>();
+            services.AddScoped<PedidoModelBuilder>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -13,6 +13,8 @@ namespace EmpireMan.App.AutoMapper
             CreateMap<Cliente, ClienteEnderecoViewModel>().ReverseMap();
             CreateMap<Produto, ProdutoViewModel>().ReverseMap();
             CreateMap<ProdutoEstoque, ProdutoEstoqueViewModel>().ReverseMap();
+            CreateMap<Pedido, PedidoViewModel>().ReverseMap();
+            CreateMap<PedidoItens, PedidoItensViewModel>().ReverseMap();
         }
     }
 }

@@ -13,6 +13,8 @@ namespace EmpireMan.Data.Context
         public DbSet<ClienteEndereco> ClienteEnderecos { get; set; }
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<ProdutoEstoque> Estoque { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<PedidoItens> PedidoItens { get; set; }
         public DbSet<PedidoItensProduto> PedidoItensProduto { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -20,6 +20,11 @@ namespace EmpireMan.App.ViewModels
         [DisplayName("Total de Desconto")]
         public decimal ValorDesconto { get; set; }
 
-        public List<PedidoViewModel> PedidoItens { get; set; }
+        [DisplayName("Valor Total")]
+        public decimal ValorTotal { get; set; }
+
+
+        public ClienteViewModel Cliente { get; set; }
+        public List<PedidoItensViewModel> PedidoItens { get; set; }
     }
 }

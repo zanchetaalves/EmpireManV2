@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Pedidos\Create.cshtml" />
+    <Content Remove="Views\Pedidos\Delete.cshtml" />
+    <Content Remove="Views\Pedidos\Details.cshtml" />
+    <Content Remove="Views\Pedidos\Edit.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.1.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
