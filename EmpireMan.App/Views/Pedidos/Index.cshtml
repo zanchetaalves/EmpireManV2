@@ -25,27 +25,25 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Pedidos)
+
+        @foreach (var item in Model.PedidoItens)
         {
-            foreach (var item2 in item.PedidoItens)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item2.Pedido.DataPedido)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item2.Pedido.Cliente.Nome)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item2.Pedido.ValorTotal)
-                    </td>
-                    <td class="text-right">
-                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
-                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a>
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></spam></a>
-                    </td>
-                </tr>
-            }
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pedido.DataPedido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pedido.Cliente.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pedido.ValorTotal)
+                </td>
+                <td class="text-right">
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></spam></a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

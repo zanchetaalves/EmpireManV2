@@ -25,7 +25,7 @@ namespace EmpireMan.App.ModelBuilders
         public async Task<PedidoFiltroViewModel> CreateFrom()
         {
             var vm = new PedidoFiltroViewModel();
-            vm.Pedidos = _mapper.Map<IEnumerable<PedidoViewModel>>(await _pedidoRepository.ObterTodos()).ToList();
+            vm.PedidoItens = _mapper.Map<IEnumerable<PedidoItensViewModel>>(await _pedidoItensRepository.ObterTodos()).ToList();
 
             return vm;
         }
