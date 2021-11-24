@@ -10,6 +10,6 @@ namespace EmpireMan.Business.Models
         public decimal ValorDesconto { get; set; }
 
         public virtual Cliente Cliente { get; set; }
-        //public virtual IEnumerable<PedidoItens> PedidoItens { get; set; }
+        public virtual IEnumerable<PedidoItens> PedidoItens { get; set; }
     }
 }
