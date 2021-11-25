@@ -12,21 +12,27 @@ namespace EmpireMan.App.Controllers
     public class PedidosController : BaseController
     {
         private readonly PedidoModelBuilder _pedidoModelBuilder;
+        private readonly PedidoItensModelBuilder _pedidoItensModelBuilder;
         private readonly IPedidoRepository _pedidoRepository;
         private readonly IPedidoItensRepository _pedidoItensRepository;
         private readonly IProdutoRepository _produtoRepository;
+        private readonly IClienteRepository _clienteRepository;
         private readonly IMapper _mapper;
 
         public PedidosController(PedidoModelBuilder pedidoModelBuilder,
+                                 PedidoItensModelBuilder pedidoItensModelBuilder,
                                  IPedidoRepository pedidoRepository,
                                  IPedidoItensRepository pedidoItensRepository,
                                  IProdutoRepository produtoRepository,
+                                 IClienteRepository clienteRepository,
                                  IMapper mapper)
         {
             _pedidoModelBuilder = pedidoModelBuilder;
+            _pedidoItensModelBuilder = pedidoItensModelBuilder;
             _pedidoRepository = pedidoRepository;
             _pedidoItensRepository = pedidoItensRepository;
             _produtoRepository = produtoRepository;
+            _clienteRepository = clienteRepository;
             _mapper = mapper;
         }
 
@@ -42,7 +48,7 @@ namespace EmpireMan.App.Controllers
         {
             vm.Pedidos = _mapper.Map<IEnumerable<PedidoViewModel>>(await _pedidoRepository.BuscarPorFiltros(vm.DataPedido)).ToList();
 
-            return View("Index", vm);
+            return View(nameof(Index), vm);
         }
 
         //public async Task<IActionResult> Details(int id)
@@ -61,24 +67,26 @@ namespace EmpireMan.App.Controllers
             return View(vm);
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(ProdutoViewModel vm)
-        //{
-        //    if (!ModelState.IsValid) return View(vm);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(PedidoCadastroViewModel vm)
+        {
+            if (!ModelState.IsValid) return View(vm);
 
-        //    var imgPrefixo = string.Concat(Guid.NewGuid(), "_");
+            var pedido = _pedidoModelBuilder.ConvertVmToEntity(vm.PedidoViewModel);
+            await _pedidoRepository.Adicionar(pedido);
 
-        //    if (!await UploadArquivo(vm.ImagemUpload, imgPrefixo)) return View(vm);
+            var pedidoItens = _pedidoItensModelBuilder.ConvertVmToEntity(vm.PedidoItensViewModel);
+            pedidoItens.PedidoId = pedido.Id;
+            await _pedidoItensRepository.Adicionar(pedidoItens);
 
-        //    vm.Imagem = imgPrefixo + vm.ImagemUpload.FileName;
-        //    vm.DataCadastro = DateTime.Now;
+            vm.PedidoViewModel.ListaDeCliente = _mapper.Map<IEnumerable<ClienteViewModel>>(await _clienteRepository.ObterTodos()).ToList();
+            vm.PedidoItensViewModel.ListaProdutos = _mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterTodos()).ToList();
+            vm.ListaPedidoItensViewModel = _mapper.Map<IEnumerable<PedidoItensViewModel>>(await _pedidoItensRepository.Buscar(x => x.PedidoId == pedido.Id)).ToList();
+            vm.PedidoViewModel.Id = pedido.Id;
 
-        //    var produto = _mapper.Map<Produto>(vm);
-        //    await _produtoRepository.Adicionar(produto);
-
-        //    return RedirectToAction(nameof(Index));
-        //}
+            return View(nameof(Create), vm);
+        }
 
         //public async Task<IActionResult> Edit(int id)
         //{

@@ -5,6 +5,7 @@
 <hr />
 
 <form asp-action="Create">
+    <input type="hidden" asp-for="@Model.PedidoViewModel.Id" />
     <div class="row">
         <div class="form-group col-md-3">
             <label asp-for="PedidoViewModel.DataPedido" class="control-label"></label>
@@ -57,10 +58,10 @@
         </div>
     </div>
 
-        <div class="form-group">
-            <input type="submit" value="Cadastrar" class="btn btn-primary" />
-            <a class="btn btn-info" asp-action="Index">Voltar</a>
-        </div>
+    <div class="form-group">
+        <input type="submit" value="Cadastrar" class="btn btn-primary" />
+        <a class="btn btn-info" asp-action="Index">Voltar</a>
+    </div>
 </form>
 <hr />
 <table class="table table-hover">

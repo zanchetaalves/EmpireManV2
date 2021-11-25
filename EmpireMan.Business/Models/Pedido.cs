@@ -5,6 +5,10 @@ namespace EmpireMan.Business.Models
 {
     public class Pedido : Entity
     {
+        public Pedido()
+        {
+
+        }
         public int ClienteId { get; set; }
         public DateTime DataPedido { get; set; }
         public decimal ValorDesconto { get; set; }

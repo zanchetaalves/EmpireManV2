@@ -57,6 +57,7 @@ namespace EmpireMan.App
             services.AddScoped<IPedidoRepository, PedidoRepository>();
             services.AddScoped<IPedidoItensRepository, PedidoItensRepository>();
             services.AddScoped<PedidoModelBuilder>();
+            services.AddScoped<PedidoItensModelBuilder>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
