@@ -32,7 +32,7 @@ namespace EmpireMan.App.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var vm = await _pedidoModelBuilder.CreateFrom();
+            var vm = await _pedidoModelBuilder.CreateFromIndex();
             return View(vm);
         }
 
@@ -40,7 +40,6 @@ namespace EmpireMan.App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Consultar(PedidoFiltroViewModel vm)
         {
-            //vm.ListaProdutos = _mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterTodos()).ToList();
             vm.Pedidos = _mapper.Map<IEnumerable<PedidoViewModel>>(await _pedidoRepository.BuscarPorFiltros(vm.DataPedido)).ToList();
 
             return View("Index", vm);
@@ -56,11 +55,11 @@ namespace EmpireMan.App.Controllers
         //    return View(vm);
         //}
 
-        //public async Task<IActionResult> Create()
-        //{
-        //    var vm = await ObterCategorias(new ProdutoViewModel());
-        //    return View(vm);
-        //}
+        public async Task<IActionResult> Create()
+        {
+            var vm = await _pedidoModelBuilder.CreateFromCadastro();
+            return View(vm);
+        }
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -30,7 +28,7 @@ namespace EmpireMan.App.ViewModels
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public decimal ValorTotal { get; set; }
 
-        [DisplayName("% Desconto")]
+        [DisplayName("Desconto (%)")]
         public decimal PercentualDesconto { get; set; }
 
         [DisplayName("Desconto (R$)")]
@@ -38,6 +36,7 @@ namespace EmpireMan.App.ViewModels
 
 
         public PedidoViewModel Pedido { get; set; }
+        public ProdutoViewModel Produto { get; set; }
         public List<ProdutoViewModel> ListaProdutos { get; set; }
     }
 }

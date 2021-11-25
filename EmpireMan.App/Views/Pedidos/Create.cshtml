@@ -1,64 +1,124 @@
-﻿@model EmpireMan.App.ViewModels.ProdutoViewModel
+﻿@model EmpireMan.App.ViewModels.PedidoCadastroViewModel
 
-<h1>Novo Produto</h1>
+<h1>Novo Pedido</h1>
 
 <hr />
-<div class="row">
-    <div class="col-md-10">
-        <form enctype="multipart/form-data" asp-action="Create">
-            <div class="form-group">
-                <label asp-for="CategoriaId" class="control-label"></label>
-                <select asp-for="CategoriaId" class="form-control" asp-items="@(new SelectList(Model.ListaCategorias, "Id", "Descricao"))">
-                    <option></option>
-                </select>
 
-                <span asp-validation-for="CategoriaId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Descricao" class="control-label"></label>
-                <input asp-for="Descricao" class="form-control" />
-                <span asp-validation-for="Descricao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CodigoBarras" class="control-label"></label>
-                <input asp-for="CodigoBarras" class="form-control" />
-                <span asp-validation-for="CodigoBarras" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Valor" class="control-label"></label>
-                <input asp-for="Valor" class="form-control" />
-                <span asp-validation-for="Valor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImagemUpload" class="labelFile"></label>
-                
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="ImagemUpload" asp-for="ImagemUpload" />
-                    <label data-browse="Procurar" style="width:800px" class="custom-file-label" for="ImagemUpload"></label>
-                    <label style="display: none" id="img_nome"></label>
-                </div>
-
-                <span asp-validation-for="ImagemUpload" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Cadastrar" class="btn btn-primary" />
-                <a class="btn btn-info" asp-action="Index">Voltar</a>
-            </div>
-        </form>
+<form asp-action="Create">
+    <div class="row">
+        <div class="form-group col-md-3">
+            <label asp-for="PedidoViewModel.DataPedido" class="control-label"></label>
+            <input asp-for="PedidoViewModel.DataPedido" class="form-control" />
+            <span asp-validation-for="PedidoViewModel.DataPedido" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-9">
+            <label asp-for="PedidoViewModel.ClienteId" class="control-label"></label>
+            <select asp-for="PedidoViewModel.ClienteId" class="form-control" asp-items="@(new SelectList(Model.PedidoViewModel.ListaDeCliente, "Id", "Nome"))">
+                <option></option>
+            </select>
+            <span asp-validation-for="PedidoViewModel.ClienteId" class="text-danger"></span>
+        </div>
     </div>
-</div>
+
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label asp-for="PedidoItensViewModel.ProdutoId" class="control-label"></label>
+            <select asp-for="PedidoItensViewModel.ProdutoId" class="form-control" asp-items="@(new SelectList(Model.PedidoItensViewModel.ListaProdutos, "Id", "Descricao"))">
+                <option></option>
+            </select>
+            <span asp-validation-for="PedidoItensViewModel.ProdutoId" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-2">
+            <label asp-for="PedidoItensViewModel.Quantidade" class="control-label"></label>
+            <input asp-for="PedidoItensViewModel.Quantidade" class="form-control" />
+            <span asp-validation-for="PedidoItensViewModel.Quantidade" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-2">
+            <label asp-for="PedidoItensViewModel.ValorUnitario" class="control-label"></label>
+            <input asp-for="PedidoItensViewModel.ValorUnitario" class="form-control" />
+            <span asp-validation-for="PedidoItensViewModel.ValorUnitario" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-2">
+            <label asp-for="PedidoItensViewModel.ValorTotal" class="control-label"></label>
+            <input asp-for="PedidoItensViewModel.ValorTotal" class="form-control" />
+            <span asp-validation-for="PedidoItensViewModel.ValorTotal" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-2">
+            <label asp-for="PedidoItensViewModel.PercentualDesconto" class="control-label"></label>
+            <input asp-for="PedidoItensViewModel.PercentualDesconto" class="form-control" />
+            <span asp-validation-for="PedidoItensViewModel.PercentualDesconto" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-2">
+            <label asp-for="PedidoItensViewModel.ValorDesconto" class="control-label"></label>
+            <input asp-for="PedidoItensViewModel.ValorDesconto" class="form-control" />
+            <span asp-validation-for="PedidoItensViewModel.ValorDesconto" class="text-danger"></span>
+        </div>
+    </div>
+
+        <div class="form-group">
+            <input type="submit" value="Cadastrar" class="btn btn-primary" />
+            <a class="btn btn-info" asp-action="Index">Voltar</a>
+        </div>
+</form>
+<hr />
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                Produto
+            </th>
+            <th>
+                Quantidade
+            </th>
+            <th>
+                Valor Unitário
+            </th>
+            <th>
+                Valor Total
+            </th>
+            <th>
+                Desconto(R$)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model.ListaPedidoItensViewModel)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Produto.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorUnitario)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorTotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ValorDesconto)
+            </td>
+            <td class="text-right">
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></spam></a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
 
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-        $("#ImagemUpload").change(function () {
-            $("#img_nome").text(this.files[0].name);
-            $("#img_nome")[0].style.display = 'block';
-        });
 
-        $("#ImagemUpload").attr("data-val", "true");
     </script>
 }

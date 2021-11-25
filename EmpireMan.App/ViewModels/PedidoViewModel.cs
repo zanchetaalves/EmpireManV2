@@ -16,6 +16,7 @@ namespace EmpireMan.App.ViewModels
 
         [ScaffoldColumn(false)]
         [DataType(DataType.Date)]
+        [DisplayName("Data do Pedido")]
         public DateTime DataPedido { get; set; }
 
         [DisplayName("Total de Desconto")]
@@ -26,6 +27,7 @@ namespace EmpireMan.App.ViewModels
 
 
         public ClienteViewModel Cliente { get; set; }
+        public List<ClienteViewModel> ListaDeCliente { get; set; }
         public List<PedidoItensViewModel> PedidoItens { get; set; }
     }
 }
