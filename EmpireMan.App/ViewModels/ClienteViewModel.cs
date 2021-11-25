@@ -22,6 +22,7 @@ namespace EmpireMan.App.ViewModels
 
         [ScaffoldColumn(false)]
         [DisplayName("Data de Nascimento")]
+        [DataType(DataType.Date)]
         public DateTime DataNascimento { get; set; }
 
         [DisplayName("Ativo?")]

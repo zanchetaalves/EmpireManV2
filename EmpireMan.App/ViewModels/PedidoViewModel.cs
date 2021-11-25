@@ -15,6 +15,7 @@ namespace EmpireMan.App.ViewModels
         public int ClienteId { get; set; }
 
         [ScaffoldColumn(false)]
+        [DataType(DataType.Date)]
         public DateTime DataPedido { get; set; }
 
         [DisplayName("Total de Desconto")]

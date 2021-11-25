@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EmpireMan.Business.Models
 {
@@ -9,6 +10,7 @@ namespace EmpireMan.Business.Models
         public string Cpf { get; set; }
         public string Rg { get; set; }
         public DateTime DataNascimento { get; set; }
+
         public bool Ativo { get; set; }
 
         public virtual ClienteEndereco ClienteEndereco { get; set; }

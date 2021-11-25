@@ -1,5 +1,10 @@
-﻿using EmpireMan.App.ModelBuilders;
+﻿using AutoMapper;
+using EmpireMan.App.ModelBuilders;
+using EmpireMan.App.ViewModels;
+using EmpireMan.Business.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EmpireMan.App.Controllers
@@ -7,16 +12,38 @@ namespace EmpireMan.App.Controllers
     public class PedidosController : BaseController
     {
         private readonly PedidoModelBuilder _pedidoModelBuilder;
+        private readonly IPedidoRepository _pedidoRepository;
+        private readonly IPedidoItensRepository _pedidoItensRepository;
+        private readonly IProdutoRepository _produtoRepository;
+        private readonly IMapper _mapper;
 
-        public PedidosController(PedidoModelBuilder pedidoModelBuilder)
+        public PedidosController(PedidoModelBuilder pedidoModelBuilder,
+                                 IPedidoRepository pedidoRepository,
+                                 IPedidoItensRepository pedidoItensRepository,
+                                 IProdutoRepository produtoRepository,
+                                 IMapper mapper)
         {
             _pedidoModelBuilder = pedidoModelBuilder;
+            _pedidoRepository = pedidoRepository;
+            _pedidoItensRepository = pedidoItensRepository;
+            _produtoRepository = produtoRepository;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
             var vm = await _pedidoModelBuilder.CreateFrom();
             return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Consultar(PedidoFiltroViewModel vm)
+        {
+            //vm.ListaProdutos = _mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterTodos()).ToList();
+            vm.Pedidos = _mapper.Map<IEnumerable<PedidoViewModel>>(await _pedidoRepository.BuscarPorFiltros(vm.DataPedido)).ToList();
+
+            return View("Index", vm);
         }
 
         //public async Task<IActionResult> Details(int id)

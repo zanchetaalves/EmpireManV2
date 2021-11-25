@@ -32,6 +32,7 @@ namespace EmpireMan.App.ViewModels
         public decimal Valor { get; set; }
 
         [ScaffoldColumn(false)]
+        [DataType(DataType.Date)]
         public DateTime DataCadastro { get; set; }
 
         [DisplayName("Ativo?")]

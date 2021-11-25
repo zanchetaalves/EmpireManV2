@@ -10,6 +10,24 @@
     <a class="btn btn-info" asp-action="Create">Novo Pedido</a>
 </p>
 
+<form asp-action="Consultar" method="post">
+    <div class="row col-md-12">
+        <div class="form-group col-md-4">
+            <label asp-for="DataPedido" class="control-label"></label>
+            <input asp-for="DataPedido" class="form-control" />
+        </div>
+        @*<div class="form-group col-md-4">
+            <label asp-for="ProdutoId" class="control-label"></label>
+            <select asp-for="ProdutoId" class="form-control" asp-items="@(new SelectList(Model.ListaProdutos, "Id", "Descricao"))">
+                <option></option>
+            </select>
+        </div>*@
+        <div class="row" style="margin-top:20px">
+            <input class="btn btn-info" type="submit" name="Pesquisar" value="Consultar" />
+        </div>
+    </div>
+</form>
+
 <table class="table table-hover">
     <thead class="thead-dark">
         <tr>
@@ -26,17 +44,17 @@
     </thead>
     <tbody>
 
-        @foreach (var item in Model.PedidoItens)
+        @foreach (var item in Model.Pedidos)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Pedido.DataPedido)
+                    @Html.DisplayFor(modelItem => item.DataPedido)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Pedido.Cliente.Nome)
+                    @Html.DisplayFor(modelItem => item.Cliente.Nome)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Pedido.ValorTotal)
+                    @Html.DisplayFor(modelItem => item.ValorTotal)
                 </td>
                 <td class="text-right">
                     <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
