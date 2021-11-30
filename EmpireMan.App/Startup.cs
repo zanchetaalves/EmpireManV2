@@ -1,18 +1,20 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using EmpireMan.Data.Context;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using EmpireMan.App.Configurations;
 using EmpireMan.App.Data;
+using EmpireMan.App.Extensions;
+using EmpireMan.App.ModelBuilders;
+using EmpireMan.Business.Interfaces;
+using EmpireMan.Data.Context;
+using EmpireMan.Data.Repository;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
-using EmpireMan.App.Configurations;
-using EmpireMan.Business.Interfaces;
-using EmpireMan.Data.Repository;
-using AutoMapper;
-using EmpireMan.App.ModelBuilders;
+using Microsoft.AspNetCore.Mvc.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EmpireMan.App
 {
@@ -58,6 +60,7 @@ namespace EmpireMan.App
             services.AddScoped<IPedidoItensRepository, PedidoItensRepository>();
             services.AddScoped<PedidoModelBuilder>();
             services.AddScoped<PedidoItensModelBuilder>();
+            services.AddSingleton<IValidationAttributeAdapterProvider, MoedaValidationAttributeAdapterProvider>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
