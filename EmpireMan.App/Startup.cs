@@ -46,7 +46,7 @@ namespace EmpireMan.App
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_2);
+            services.AddMvcConfiguration();
 
             services.AddScoped<EmpireDbContext>();
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
