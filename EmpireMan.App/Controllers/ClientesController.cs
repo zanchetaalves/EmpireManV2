@@ -41,17 +41,17 @@ namespace EmpireMan.App.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(CategoriaViewModel vm)
-        //{
-        //    if (!ModelState.IsValid) return View(vm);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(ClienteViewModel vm)
+        {
+            if (!ModelState.IsValid) return View(vm);
 
-        //    var categoria = _mapper.Map<Categoria>(vm);
-        //    await _categoriaRepository.Adicionar(categoria);
+            var cliente = _mapper.Map<Cliente>(vm);
+            await _clienteRepository.Adicionar(cliente);
 
-        //    return RedirectToAction(nameof(Index));
-        //}
+            return RedirectToAction(nameof(Index));
+        }
 
         public async Task<IActionResult> Edit(int id)
         {
@@ -62,18 +62,18 @@ namespace EmpireMan.App.Controllers
             return View(vm);
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, CategoriaViewModel vm)
-        //{
-        //    if (id != vm.Id) return NotFound();
-        //    if (!ModelState.IsValid) return View(vm);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, ClienteViewModel vm)
+        {
+            if (id != vm.Id) return NotFound();
+            if (!ModelState.IsValid) return View(vm);
 
-        //    var categoria = _mapper.Map<Categoria>(vm);
-        //    await _categoriaRepository.Atualizar(categoria);
+            var cliente = _mapper.Map<Cliente>(vm);
+            await _clienteRepository.Atualizar(cliente);
 
-        //    return RedirectToAction(nameof(Index));
-        //}
+            return RedirectToAction(nameof(Index));
+        }
 
         public async Task<IActionResult> Delete(int id)
         {
@@ -84,20 +84,17 @@ namespace EmpireMan.App.Controllers
             return View(categoriaVm);
         }
 
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var categoria = await _categoriaRepository.ObterPorId(id);
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var cliente = await _clienteRepository.ObterPorId(id);
 
-        //    if (categoria == null) return NotFound();
+            if (cliente == null) return NotFound();
 
-        //    if (categoria.Produtos != null)
-        //        throw new Exception("Não foi possível excluir a categoria, existem produtos vínculados a mesma.");
+            await _clienteRepository.Remover(id);
 
-        //    await _categoriaRepository.Remover(id);
-
-        //    return RedirectToAction(nameof(Index));
-        //}
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

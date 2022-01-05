@@ -9,8 +9,8 @@ namespace EmpireMan.App.AutoMapper
         public AutoMapperConfig()
         {
             CreateMap<Categoria, CategoriaViewModel>().ReverseMap();
+            CreateMap<Cliente, ClienteViewModel>().ReverseMap();
             CreateMap<ClienteEndereco, ClienteEnderecoViewModel>().ReverseMap();
-            CreateMap<Cliente, ClienteEnderecoViewModel>().ReverseMap();
             CreateMap<Produto, ProdutoViewModel>().ReverseMap();
             CreateMap<ProdutoEstoque, ProdutoEstoqueViewModel>().ReverseMap();
             CreateMap<Pedido, PedidoViewModel>().ReverseMap();
