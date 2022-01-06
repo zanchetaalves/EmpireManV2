@@ -12,19 +12,17 @@
 
 <form asp-action="AtualizarEndereco">
     <div class="modal-body">
-
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="ClienteEndereco.Id" />
 
         <partial name="_Endereco" />
+    </div>
 
-        <div class="modal-footer">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Atualizar Endereço" class="btn btn-success" />
-                <input type="button" class="btn btn-info" value="Fechar" data-dismiss="modal" />
-            </div>
+    <div class="modal-footer">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Atualizar Endereço" class="btn btn-success" />
+            <input type="button" class="btn btn-info" value="Fechar" data-dismiss="modal" />
         </div>
-
     </div>
 </form>
 

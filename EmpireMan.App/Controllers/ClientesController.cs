@@ -2,8 +2,8 @@
 using EmpireMan.App.ViewModels;
 using EmpireMan.Business.Interfaces;
 using EmpireMan.Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,12 +12,15 @@ namespace EmpireMan.App.Controllers
     public class ClientesController : BaseController
     {
         private readonly IClienteRepository _clienteRepository;
+        private readonly IClienteEnderecoRepository _clienteEnderecoRepository;
         private readonly IMapper _mapper;
 
         public ClientesController(IClienteRepository clienteRepository,
+                                  IClienteEnderecoRepository clienteEnderecoRepository,
                                   IMapper mapper)
         {
             _clienteRepository = clienteRepository;
+            _clienteEnderecoRepository = clienteEnderecoRepository;
             _mapper = mapper;
         }
 
@@ -95,6 +98,51 @@ namespace EmpireMan.App.Controllers
             await _clienteRepository.Remover(id);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> AtualizarEndereco(int id)
+        {
+            var vm = _mapper.Map<ClienteViewModel>(await _clienteRepository.ObterPorId(id));
+
+            if (vm == null) return NotFound();
+
+            return PartialView("_AtualizarEndereco", new ClienteViewModel { ClienteEndereco = vm.ClienteEndereco });
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> ObterEndereco(int id)
+        {
+            var vm = _mapper.Map<ClienteViewModel>(await _clienteRepository.ObterPorId(id));
+
+            if (vm == null) return NotFound();
+
+            return PartialView("_DetalhesEndereco", vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AtualizarEndereco(ClienteViewModel clienteViewModel)
+        {
+            ModelState.Remove("Nome");
+            ModelState.Remove("Cpf");
+
+            if (!ModelState.IsValid) return PartialView("_AtualizarEndereco", clienteViewModel);
+
+            try
+            {
+                clienteViewModel.ClienteEndereco.Cliente = clienteViewModel;
+                var clienteEndereco = _mapper.Map<ClienteEndereco>(clienteViewModel.ClienteEndereco);
+                clienteEndereco.Cliente = null;
+                await _clienteEnderecoRepository.Atualizar(clienteEndereco);
+            }
+            catch (System.Exception ex)
+            {
+                throw new System.Exception(ex.Message);
+            }
+            
+
+            var url = Url.Action("ObterEndereco", "Clientes", new { id = clienteViewModel.Id });
+            return Json(new { success = true, url });
         }
     }
 }

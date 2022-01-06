@@ -1,5 +1,4 @@
-﻿@using EmpireMan.App.Extensions
-@model EmpireMan.App.ViewModels.ClienteViewModel
+﻿@model EmpireMan.App.ViewModels.ClienteViewModel
 
 @{
     ViewData["Title"] = "Editar Cliente";
@@ -10,10 +9,11 @@
 <hr />
 
 <form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="Id" />
 
     <div class="form-row">
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label asp-for="Nome"></label>
             <input asp-for="Nome" class="form-control" />
             <span asp-validation-for="Nome" class="text-danger"></span>
@@ -21,7 +21,8 @@
             <label asp-for="Cpf"></label>
             <input asp-for="Cpf" class="form-control" />
             <span asp-validation-for="Cpf" class="text-danger"></span>
-
+        </div>
+        <div class="form-group col-md-6">
             <label asp-for="Rg"></label>
             <input asp-for="Rg" class="form-control" />
             <span asp-validation-for="Rg" class="text-danger"></span>
@@ -43,7 +44,7 @@
 
 <div id="myModal" class="modal fade in">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="width: 1000px;">
             <div id="myModalContent"></div>
         </div>
     </div>
@@ -54,7 +55,7 @@
 
     <script>
         $(document).ready(function () {
-            AjaxModal();
+            SetModal();
         });
     </script>
 

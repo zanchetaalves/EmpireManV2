@@ -37,10 +37,11 @@
         </dd>
     </dl>
 </div>
+
+<partial name="_DetalhesEndereco" />
+
 <div>
-    <a class="btn btn-dark"  supress-by-claim-name="Cliente" supress-by-claim-value="Editar" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+    <a class="btn btn-warning"  supress-by-claim-name="Cliente" supress-by-claim-value="Editar" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
     <a class="btn btn-info" asp-action="Index">Voltar</a>
 </div>
 
-
-<partial name="_DetalhesEndereco" />
