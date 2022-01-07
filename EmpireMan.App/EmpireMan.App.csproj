@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Scripts\**" />
+    <Content Remove="Scripts\**" />
+    <EmbeddedResource Remove="Scripts\**" />
+    <None Remove="Scripts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Pedidos\Delete.cshtml" />
     <Content Remove="Views\Pedidos\Details.cshtml" />
     <Content Remove="Views\Pedidos\Edit.cshtml" />
