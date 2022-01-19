@@ -20,46 +20,18 @@
             <span asp-validation-for="PedidoViewModel.ClienteId" class="text-danger"></span>
         </div>
     </div>
-
-    <div class="row">
-        <div class="form-group col-md-6">
-            <label asp-for="PedidoItensViewModel.ProdutoId" class="control-label"></label>
-            <select asp-for="PedidoItensViewModel.ProdutoId" class="form-control" asp-items="@(new SelectList(Model.PedidoItensViewModel.ListaProdutos, "Id", "Descricao"))">
-                <option></option>
-            </select>
-            <span asp-validation-for="PedidoItensViewModel.ProdutoId" class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-2">
-            <label asp-for="PedidoItensViewModel.Quantidade" class="control-label"></label>
-            <input asp-for="PedidoItensViewModel.Quantidade" class="form-control" />
-            <span asp-validation-for="PedidoItensViewModel.Quantidade" class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-2">
-            <label asp-for="PedidoItensViewModel.ValorUnitario" class="control-label"></label>
-            <input asp-for="PedidoItensViewModel.ValorUnitario" class="form-control" />
-            <span asp-validation-for="PedidoItensViewModel.ValorUnitario" class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-2">
-            <label asp-for="PedidoItensViewModel.ValorTotal" class="control-label"></label>
-            <input asp-for="PedidoItensViewModel.ValorTotal" class="form-control" />
-            <span asp-validation-for="PedidoItensViewModel.ValorTotal" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group col-md-2">
-            <label asp-for="PedidoItensViewModel.PercentualDesconto" class="control-label"></label>
-            <input asp-for="PedidoItensViewModel.PercentualDesconto" class="form-control" />
-            <span asp-validation-for="PedidoItensViewModel.PercentualDesconto" class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-2">
-            <label asp-for="PedidoItensViewModel.ValorDesconto" class="control-label"></label>
-            <input asp-for="PedidoItensViewModel.ValorDesconto" class="form-control" />
-            <span asp-validation-for="PedidoItensViewModel.ValorDesconto" class="text-danger"></span>
-        </div>
-    </div>
-
     <div class="form-group">
-        <input type="submit" value="Cadastrar" class="btn btn-primary" />
+        @if (Model.PedidoViewModel.Id > 0)
+        {
+            <a asp-action="AdicionarProduto" asp-route-id="1" class="btn btn-info" data-modal="">
+                <span title="Adicionar" class="fa fa-pencil-alt"></span>
+            </a>
+        }
+        else
+        {
+            <input type="submit" value="Cadastrar" class="btn btn-primary" />
+        }
+
         <a class="btn btn-info" asp-action="Index">Voltar</a>
     </div>
 </form>
@@ -88,38 +60,49 @@
 
         @foreach (var item in Model.ListaPedidoItensViewModel)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Produto.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantidade)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValorUnitario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValorTotal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValorDesconto)
-            </td>
-            <td class="text-right">
-                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a>
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></spam></a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Produto.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValorUnitario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValorTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ValorDesconto)
+                </td>
+                <td class="text-right">
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><spam class="fa fa-search"></spam></a>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><spam class="fa fa-pencil-alt"></spam></a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id"><spam class="fa fa-trash"></spam></a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
 
-
+<div id="myModal" class="modal fade in">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width: 1000px;">
+            <div id="myModalContent"></div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    <script>
+    <script src="~/js/Pedidos/AdicionarItens.js" asp-append-version="true"></script>
 
+    <script>
+        $(document).ready(function () {
+            SetModal();
+        });
     </script>
+
 }

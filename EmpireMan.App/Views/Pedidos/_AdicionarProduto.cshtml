@@ -1,0 +1,26 @@
+﻿@model EmpireMan.App.ViewModels.PedidoItensViewModel
+@{
+    ViewData["Title"] = "Adicionar Produto";
+}
+
+<div class="modal-header">
+    <h4 class="modal-title">@ViewData["Title"]</h4>
+    <button type="button" class="close" data-dismiss="modal">
+        <span aria-hidden="true">×</span><span class="sr-only">Fechar</span>
+    </button>
+</div>
+
+<form asp-action="AdicionarProduto">
+    <div class="modal-body">
+        <input type="hidden" asp-for="PedidoId" />
+
+        <partial name="_Produto" />
+    </div>
+
+    <div class="modal-footer">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Adicionar Produto" class="btn btn-success" />
+            <input type="button" class="btn btn-info" value="Fechar" data-dismiss="modal" />
+        </div>
+    </div>
+</form>

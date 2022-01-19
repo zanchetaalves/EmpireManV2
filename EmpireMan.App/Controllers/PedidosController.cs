@@ -76,13 +76,13 @@ namespace EmpireMan.App.Controllers
             var pedido = _pedidoModelBuilder.ConvertVmToEntity(vm.PedidoViewModel);
             await _pedidoRepository.Adicionar(pedido);
 
-            var pedidoItens = _pedidoItensModelBuilder.ConvertVmToEntity(vm.PedidoItensViewModel);
-            pedidoItens.PedidoId = pedido.Id;
-            await _pedidoItensRepository.Adicionar(pedidoItens);
+            //var pedidoItens = _pedidoItensModelBuilder.ConvertVmToEntity(vm.PedidoItensViewModel);
+            //pedidoItens.PedidoId = pedido.Id;
+            //await _pedidoItensRepository.Adicionar(pedidoItens);
 
             vm.PedidoViewModel.ListaDeCliente = _mapper.Map<IEnumerable<ClienteViewModel>>(await _clienteRepository.ObterTodos()).ToList();
             vm.PedidoItensViewModel.ListaProdutos = _mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterTodos()).ToList();
-            vm.ListaPedidoItensViewModel = _mapper.Map<IEnumerable<PedidoItensViewModel>>(await _pedidoItensRepository.Buscar(x => x.PedidoId == pedido.Id)).ToList();
+            //vm.ListaPedidoItensViewModel = _mapper.Map<IEnumerable<PedidoItensViewModel>>(await _pedidoItensRepository.Buscar(x => x.PedidoId == pedido.Id)).ToList();
             vm.PedidoViewModel.Id = pedido.Id;
 
             return View(nameof(Create), vm);
@@ -174,5 +174,13 @@ namespace EmpireMan.App.Controllers
 
         //    return true;
         //}
+
+        public async Task<IActionResult> AdicionarProduto(int id)
+        {
+            var vm = new PedidoItensViewModel();
+            vm.ListaProdutos = _mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterTodos()).ToList();
+
+            return PartialView("_AdicionarProduto", vm);
+        }
     }
 }
