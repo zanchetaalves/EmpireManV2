@@ -2,7 +2,10 @@
 using EmpireMan.App.ModelBuilders;
 using EmpireMan.App.ViewModels;
 using EmpireMan.Business.Interfaces;
+using EmpireMan.Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -82,6 +85,7 @@ namespace EmpireMan.App.Controllers
 
             vm.PedidoViewModel.ListaDeCliente = _mapper.Map<IEnumerable<ClienteViewModel>>(await _clienteRepository.ObterTodos()).ToList();
             vm.PedidoItensViewModel.ListaProdutos = _mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterTodos()).ToList();
+            vm.PedidoItensViewModel.PedidoId = pedido.Id;
             //vm.ListaPedidoItensViewModel = _mapper.Map<IEnumerable<PedidoItensViewModel>>(await _pedidoItensRepository.Buscar(x => x.PedidoId == pedido.Id)).ToList();
             vm.PedidoViewModel.Id = pedido.Id;
 
@@ -175,12 +179,50 @@ namespace EmpireMan.App.Controllers
         //    return true;
         //}
 
-        public async Task<IActionResult> AdicionarProduto(int id)
+        public async Task<IActionResult> AdicionarProduto()
         {
             var vm = new PedidoItensViewModel();
             vm.ListaProdutos = _mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterTodos()).ToList();
 
             return PartialView("_AdicionarProduto", vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AdicionarProduto(PedidoItensViewModel pedidoItensViewModel)
+        {
+            if (!ModelState.IsValid) return PartialView("_AdicionarProduto", pedidoItensViewModel);
+
+            try
+            {
+                var pedidoItens = _mapper.Map<PedidoItens>(pedidoItensViewModel);
+                pedidoItens.Pedido = null;
+                await _pedidoItensRepository.Adicionar(pedidoItens);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+            var url = Url.Action("ObterProdutos", "Pedidos", new { pedidoId = pedidoItensViewModel.PedidoId });
+            return Json(new { success = true, url });
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> ObterProdutos(int pedidoId)
+        {
+            try
+            {
+                var vm = _mapper.Map<List<PedidoItensViewModel>>(await _pedidoItensRepository.BuscarPorPedido(pedidoId));
+                if (vm == null) return NotFound();
+
+                return PartialView("_TabelaProdutos", vm);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
         }
     }
 }
